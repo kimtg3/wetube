@@ -1,0 +1,13 @@
+extends layouts/main
+//-  main.pug 전체 코드를복사해옴,   그리고 + 추가적인것들을 작성할것임
+
+block content
+    .form-container
+        form(action=routes.editProfile, method="post")
+            label(for="avatar") Avatar
+            input(type="file", id="avatar", name="avatar")
+            input(type="text", placeholder="Name", name ="name")
+            input(type="email", placeholder="Email", name ="email")
+            input(type="submit", value="Update Profile")
+        a.form-container__link(href=`/users${routes.changePassword}`) Change Password
+            

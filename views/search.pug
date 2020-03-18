@@ -1,0 +1,17 @@
+extends layouts/main
+//-  main.pug 전체 코드를복사해옴,   그리고 + 추가적인것들을 작성할것임
+include mixins/videoBlock
+
+block content
+    .search__header
+        h3 Searching for: #{searchingBy}
+    .search__videos
+        if videos.length === 0
+            h5 No Videos Found
+        each item in videos
+            +videoBlock({
+                title: item.title,
+                views: item.views, 
+                videoFile: item.videoFile,
+                id: item.id
+            })

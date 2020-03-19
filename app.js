@@ -15,6 +15,7 @@ const app = express(); // const를 선언한 변수 app에 express를 실행해�
 app.use(helmet()); //  보안을 위한 것 
 app.set("view engine", "pug"); // view endgine을 pug으로 설정
 app.use("/uploads", express.static("uploads")) //  만약 누군가 /uploads로 간다면 express.static() 을 이용해서 uploads라는 directory안으로 들어감
+app.use("/static", express.static("static"));
 app.use(cookieParser()); // cookie를 파싱
 app.use(bodyParser.json()); // body를 파싱, 없으면 사용자가 전달하는 정보를 받을 수 없다.
 app.use(bodyParser.urlencoded({ extended: true }));

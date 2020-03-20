@@ -38,7 +38,7 @@ const config = {
     },
     output: {
         path: OUTPUT_DIR,
-        filename: "[name].[format]"
+        filename: "[name].js"
     },
     plugins: [new ExtractCSS("styles.css")]
 };

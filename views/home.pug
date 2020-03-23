@@ -3,7 +3,7 @@ extends layouts/main
 include mixins/videoBlock
 
 block content
-    .videos
+    .home-videos
         each item in videos
             +videoBlock({
                 id:item.id,
@@ -12,3 +12,63 @@ block content
                 videoFile: item.fileUrl
             })
             //- 이 정보들이 vidoeBlock으로 전달되어서 이 함수를 실행 시킴, 그리고 그 함수는 html로 내보냄
+            +videoBlock({
+                id:item.id,
+                title:item.title,
+                views:item.views,
+                videoFile:item.fileUrl
+            })
+            +videoBlock({
+                id:item.id,
+                title:item.title,
+                views:item.views,
+                videoFile:item.fileUrl
+            })
+            +videoBlock({
+                id:item.id,
+                title:item.title,
+                views:item.views,
+                videoFile:item.fileUrl
+            })
+            +videoBlock({
+                id:item.id,
+                title:item.title,
+                views:item.views,
+                videoFile:item.fileUrl
+            })
+            +videoBlock({
+                id:item.id,
+                title:item.title,
+                views:item.views,
+                videoFile:item.fileUrl
+            })
+            +videoBlock({
+                id:item.id,
+                title:item.title,
+                views:item.views,
+                videoFile:item.fileUrl
+            })
+            +videoBlock({
+                id:item.id,
+                title:item.title,
+                views:item.views,
+                videoFile:item.fileUrl
+            })
+            +videoBlock({
+                id:item.id,
+                title:item.title,
+                views:item.views,
+                videoFile:item.fileUrl
+            })
+            +videoBlock({
+                id:item.id,
+                title:item.title,
+                views:item.views,
+                videoFile:item.fileUrl
+            })
+            +videoBlock({
+                id:item.id,
+                title:item.title,
+                views:item.views,
+                videoFile:item.fileUrl
+            })

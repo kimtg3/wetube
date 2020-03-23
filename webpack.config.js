@@ -25,7 +25,7 @@ const config = {
                     options: {
                         plugins() {
                             return [autoprefixer({
-                                browsers: "cover 99.5%"
+                                overrideBrowserslist: "cover 99.5%"
                             })];
                         }
                     }

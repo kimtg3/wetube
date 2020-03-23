@@ -8,7 +8,7 @@ export const localsMiddleware = (req, res, next) => {
     res.locals.siteName = "WeTube"; // siteName : 변수명처럼 작동 -> main.pug, footer.pug 등
     res.locals.routes = routes;
     res.locals.user = {
-        isAuthenticated: true,
+        isAuthenticated: false,
         id: 1
     };
     next(); // 미들웨어가 next에 req를 전달해야함

@@ -16,6 +16,7 @@ const USERS = "/users";
 const USER_DETAIL = "/:id";
 const EDIT_PROFILE = "/edit-profile";
 const CHANGE_PASSWORD = "/change-password";
+const ME = "/me";
 
 // Videos
 
@@ -24,6 +25,11 @@ const UPLOAD = "/upload";
 const VIDEO_DETAIL = "/:id"; // 만약 controller에서 어떤 data를 가지고 있다는 것을 표현하고 싶다면 더블콜론(:)과 이름을 넣으면 된다
 const EDIT_VIDEO = "/:id/edit";
 const DELETE_VIDEO = "/:id/delete"; // :를 붙이면 변하는 값이라는 것을 의미
+
+// Guthub
+
+const GITHUB = "/auth/github";
+const GITHUB_CALLBACK = "/auth/github/callback";
 
 const routes = { // 객체를 만듬
     home: HOME,
@@ -63,7 +69,10 @@ const routes = { // 객체를 만듬
         } else {
             return DELETE_VIDEO
         }
-    }
+    },
+    github: GITHUB,
+    githubCallback: GITHUB_CALLBACK,
+    me: ME
 };
 
 export default routes;

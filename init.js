@@ -2,10 +2,12 @@
 import "./db";
 import app from "./app"; // default 로 export 했을 때 이런식으로 import 가능
 import dotenv from "dotenv";
-import "./models/Video"; // DB에 연결은 되있지만 model이 있는 것을 모르니까 import해줌
-import "./models/Comment";
 
 dotenv.config();
+
+import "./models/Video"; // DB에 연결은 되있지만 model이 있는 것을 모르니까 import해줌
+import "./models/Comment";
+import "./models/User";
 
 const PORT = process.env.PORT || 4000;
 

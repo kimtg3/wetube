@@ -4,13 +4,20 @@ import morgan from "morgan";
 import helmet from "helmet";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
+import passport from "passport";
+import mongoose from "mongoose";
+import session from "express-session";
+import MongoStore from "connect-mongo";
 import { localsMiddleware } from "./middlewares"; // default 아니고 그냥 export 했을 때  이렇게 import함 
 import userRouter from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";
 import globalRouter from "./routers/globalRouter";
 import routes from "./routes";
+import "./passport";
 
 const app = express(); // const를 선언한 변수 app에 express를 실행해서 담음
+
+const CookieStore = MongoStore(session);
 
 app.use(helmet()); //  보안을 위한 것 
 app.set("view engine", "pug"); // view endgine을 pug으로 설정
@@ -20,7 +27,16 @@ app.use(cookieParser()); // cookie를 파싱
 app.use(bodyParser.json()); // body를 파싱, 없으면 사용자가 전달하는 정보를 받을 수 없다.
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan("dev")); // 로그 기록을 보여준다
-
+app.use(
+    session({
+        secret: process.env.COOKIE_SECRET,
+        resave: true,
+        saveUninitialized: false,
+        store: new CookieStore({ mongooseConnection: mongoose.connection }) // 새로운 쿠키저장소 mongoDB와 연결해야함 , 서버 재시작해도 세션정보 보존
+    })
+);
+app.use(passport.initialize()); // 초기화, 스스로 쿠키를 들여다보고 그 쿠키정보에 해당하는 사용자를 찾아준다, 그 후 그 사용자를 요청에 의해 object 즉 req.user로 만들어줌
+app.use(passport.session());
 
 // app.use("/user", userRouter); // 누군가 /user의 경로에 접근하면 userRouter의 모든 경로를 쓰겠다.
 app.use(localsMiddleware);

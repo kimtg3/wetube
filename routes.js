@@ -26,10 +26,15 @@ const VIDEO_DETAIL = "/:id"; // 만약 controller에서 어떤 data를 가지고
 const EDIT_VIDEO = "/:id/edit";
 const DELETE_VIDEO = "/:id/delete"; // :를 붙이면 변하는 값이라는 것을 의미
 
-// Guthub
+// Github
 
 const GITHUB = "/auth/github";
 const GITHUB_CALLBACK = "/auth/github/callback";
+
+// Facebook
+
+const FB = "/auth/facebook";
+const FB_CALLBACK = "/auth/facebook/callback";
 
 const routes = { // 객체를 만듬
     home: HOME,
@@ -72,7 +77,9 @@ const routes = { // 객체를 만듬
     },
     github: GITHUB,
     githubCallback: GITHUB_CALLBACK,
-    me: ME
+    me: ME,
+    facebook: FB,
+    facebookCallback: FB_CALLBACK
 };
 
 export default routes;

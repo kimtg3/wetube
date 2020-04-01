@@ -2,7 +2,7 @@ import express from "express";
 import passport from "passport";
 import routes from "../routes"; // .. : 이 디렉토리 밖에서 찾아야 하니까
 import { home, search } from "../controllers/videoController";
-import { getJoin, postJoin, getLogin, postLogin, logout, githubLogin, postGithubLogin, getMe } from "../controllers/userController";
+import { getJoin, postJoin, getLogin, postLogin, logout, githubLogin, postGithubLogin, getMe, facebookLogin, postFacebookLogin } from "../controllers/userController";
 import { onlyPublic, onlyPrivate } from "../middlewares";
 
 const globalRouter = express.Router();
@@ -25,6 +25,14 @@ globalRouter.get(
 );
 
 globalRouter.get(routes.me, getMe);
+
+globalRouter.get(routes.facebook, facebookLogin);
+globalRouter.get(
+    routes.facebookCallback,
+    passport.authenticate("facebook", {failureRedirect: "/login" }),
+    postFacebookLogin
+)
+
 
 
 export default globalRouter;

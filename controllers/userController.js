@@ -2,6 +2,7 @@ import passport from "passport";
 import routes from "../routes";
 import User from "../models/User";
 
+// 회원가입
 export const getJoin = (req, res) => {
     res.render("join", { pageTitle: "Join" });
 }
@@ -30,6 +31,8 @@ export const postJoin = async (req, res, next) => {
     }
 };
 
+
+// 로그인
 export const getLogin = (req, res) => {
     res.render("login", { pageTitle: "Login" });
 }
@@ -39,6 +42,8 @@ export const postLogin = passport.authenticate("local", {  // local : 우리가 
     successRedirect: routes.home
 }); 
 
+
+// 깃허브 로그인 (인증)
 export const githubLogin = passport.authenticate("github");
 
 export const githubLoginCallback = async (_, __, profile, cb) => {
@@ -47,6 +52,7 @@ export const githubLoginCallback = async (_, __, profile, cb) => {
         const user = await User.findOne({email});
         if(user) {
             user.githubId = id;
+            user.avatarUrl = avatarUrl;
             user.save();
             return cb(null, user);
         } 
@@ -66,17 +72,44 @@ export const postGithubLogin = (req, res) => {
     res.redirect(routes.home);
 };
 
+
+// 페이스북 로그인(인증)
+export const facebookLogin = passport.authenticate("facebook");
+
+export const facebookLoginCallback =  (accessToken, refreshToken, profile, cb) => {
+    console.log(accessToken, refreshToken, profile, cb);
+}
+
+export const postFacebookLogin = (req, res) => {
+    res.redirect(routes.home);
+}
+
+
+// 로그아웃
 export const logout = (req, res) => {
     req.logout();
     res.redirect(routes.home);
 };
 
+
+
+// 유저정보
 export const getMe = (req, res) => {
     res.render("userDetail", { pageTitle: "UserDetail" , user: req.user}); // req.user : 현재 로그인된 사용자
 }
 
-export const userDetail = (req, res) => res.render("userDetail", { pageTitle: "UserDetail" });
+export const userDetail = async (req, res) => {
+    const { params: { id } } = req;
+    try {
+        const user = await User.findById(id);
+        res.render("userDetail", { pageTitle: "UserDetail", user });
+    } catch(error) {
+        res.redirect(routes.home);
+    }
+}
 
+
+// 정보수정
 export const editProfile = (req, res) => res.render("editProfile", { pageTitle: "EditProfile" });
 
 export const changePassword = (req, res) => res.render("changePassword", { pageTitle: "ChangePassword" });

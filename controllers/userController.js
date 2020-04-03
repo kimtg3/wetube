@@ -76,8 +76,26 @@ export const postGithubLogin = (req, res) => {
 // 페이스북 로그인(인증)
 export const facebookLogin = passport.authenticate("facebook");
 
-export const facebookLoginCallback =  (accessToken, refreshToken, profile, cb) => {
-    console.log(accessToken, refreshToken, profile, cb);
+export const facebookLoginCallback =  async (_, __, profile, cb) => {
+    const { _json: {id, name, email}} = profile; // profile 안에 있는 _json 안에서
+    try {
+        const user = await User.findOne({email});
+        if(user) {
+            user.githubId = id;
+            user.avatarUrl = `https://graph.facebook.com/${id}/picture?type=large`;
+            user.save();
+            return cb(null, user);
+        } 
+        const newUser = await User.create({
+            email,
+            name,
+            facebookId: id,
+            avatarUrl : `https://graph.facebook.com/${id}/picture?type=large`
+        });
+        return cb(null,newUser);
+    } catch(error) {
+        return cb(error);
+    }
 }
 
 export const postFacebookLogin = (req, res) => {
@@ -106,10 +124,29 @@ export const userDetail = async (req, res) => {
     } catch(error) {
         res.redirect(routes.home);
     }
-}
+};
 
 
 // 정보수정
-export const editProfile = (req, res) => res.render("editProfile", { pageTitle: "EditProfile" });
+export const getEditProfile = (req, res) => {
+    res.render("editProfile", { pageTitle: "EditProfile" });
+}
+
+export const postEditProfile = async (req, res) => {
+    const {
+        body: {name, email},
+        file
+    } = req;
+    try {
+        await User.findByIdAndUpdate(req.user.id, {
+            name,
+            email,
+            avatarUrl: file ? file.path : req.user.avatarUrl // 파일이 있으면 그 파일, 없으면 원래의 아바타url
+        });
+        res.redirect(routes.me);
+    } catch (error) {
+        res.render("editProfile", { pageTitle: "Edit Profile" });
+    }
+};
 
 export const changePassword = (req, res) => res.render("changePassword", { pageTitle: "ChangePassword" });

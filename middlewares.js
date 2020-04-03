@@ -2,6 +2,7 @@ import routes from "./routes";
 import multer from "multer";
 
 const multerVideo = multer({dest: "uploads/videos/"});
+const multerAvatar = multer({dest: "uploads/avatars/"});
 
 export const localsMiddleware = (req, res, next) => {
     //locals 추가 -> 추가되면 이것들을 템플릿, 컨트롤러 어디서든 사용 가능
@@ -29,3 +30,5 @@ export const onlyPrivate = (req, res, next) => { // 오직 로그인된 사용�
 }
 
 export const uploadVideo = multerVideo.single("videoFile");
+
+export const uploadAvatar = multerAvatar.single("avatar");

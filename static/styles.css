@@ -471,7 +471,7 @@ input[type="submit"] {
     .video-detail__container .video__comments .video__comment-number {
       font-size: 18px; }
 
-.user-profile {
+.user-proflie {
   width: 100%;
   display: -webkit-box;
   display: -webkit-flex;
@@ -490,7 +490,7 @@ input[type="submit"] {
      -moz-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column; }
-  .user-profile .user-profile__header {
+  .user-proflie .user-profile__header {
     display: -webkit-box;
     display: -webkit-flex;
     display: -moz-box;
@@ -509,10 +509,10 @@ input[type="submit"] {
         -ms-flex-align: center;
             align-items: center;
     margin-bottom: 18px; }
-    .user-profile .user-profile__header .profile__username {
+    .user-proflie .user-profile__header .profile__username {
       font-size: 18px;
       margin-top: 15px; }
-  .user-profile .user-profile__btns {
+  .user-proflie .user-profile__btns {
     display: -webkit-box;
     display: -webkit-flex;
     display: -moz-box;
@@ -530,5 +530,5 @@ input[type="submit"] {
        -moz-box-align: center;
         -ms-flex-align: center;
             align-items: center; }
-    .user-profile .user-profile__btns a:not(:last-child) {
+    .user-proflie .user-profile__btns a:not(:last-child) {
       margin-bottom: 20px; }

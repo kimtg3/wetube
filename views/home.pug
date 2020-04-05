@@ -1,9 +1,12 @@
 extends layouts/main
-//-  main.pug 전체 코드를복사해옴,   그리고 + 추가적인것들을 작성할것임
 include mixins/videoBlock
 
 block content
     .home-videos
-        each item in videos
-            
-            
+        each item in videos 
+            +videoBlock({
+                id:item.id,
+                title:item.title,
+                views:item.views,
+                videoFile:item.fileUrl
+            })

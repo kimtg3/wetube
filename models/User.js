@@ -7,6 +7,14 @@ const UserSchema = mongoose.Schema({
     avatarUrl: String, // fileUrl과 똑같이 동작 (서버로부터의 URL, 깃헙이나 페이스북으로부터의 URL이 될수도 있다)
     facebookId: Number,
     githubId: Number,
+    comments: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Comment"
+    }],
+    videos: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Video"
+    }],
 });
 
 UserSchema.plugin(passportLocalMongoose, {usernameField: "email"});

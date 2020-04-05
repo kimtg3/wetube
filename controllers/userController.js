@@ -112,15 +112,21 @@ export const logout = (req, res) => {
 
 
 // 유저정보
-export const getMe = (req, res) => {
-    res.render("userDetail", { pageTitle: "UserDetail" , user: req.user}); // req.user : 현재 로그인된 사용자
-}
+export const getMe = async (req, res) => {
+    try {
+      const user = await User.findById(req.user.id).populate("videos"); // req.user : 현재로그인된 사용자
+      res.render("userDetail", { pageTitle: "User Detail", user });
+    } catch (error) {
+      res.redirect(routes.home);
+    }
+  };
 
 export const userDetail = async (req, res) => {
     const { params: { id } } = req;
     try {
-        const user = await User.findById(id);
-        res.render("userDetail", { pageTitle: "UserDetail", user });
+        const user = await User.findById(id).populate("videos");
+        console.log(user);
+        res.render("userDetail", { pageTitle: "User Detail", user });
     } catch(error) {
         res.redirect(routes.home);
     }
@@ -129,24 +135,45 @@ export const userDetail = async (req, res) => {
 
 // 정보수정
 export const getEditProfile = (req, res) => {
-    res.render("editProfile", { pageTitle: "EditProfile" });
+    res.render("editProfile", { pageTitle: "Edit Profile" });
 }
 
 export const postEditProfile = async (req, res) => {
     const {
         body: {name, email},
-        file
+        file,
     } = req;
     try {
-        await User.findByIdAndUpdate(req.user.id, {
+        await User.findByIdAndUpdate(req.user._id, {
             name,
             email,
             avatarUrl: file ? file.path : req.user.avatarUrl // 파일이 있으면 그 파일, 없으면 원래의 아바타url
         });
         res.redirect(routes.me);
-    } catch (error) {
-        res.render("editProfile", { pageTitle: "Edit Profile" });
+    } catch(error) {
+        res.redirect(routes.editProfile);
     }
 };
 
-export const changePassword = (req, res) => res.render("changePassword", { pageTitle: "ChangePassword" });
+export const getChangePassword = (req, res) => {
+    res.render("changePassword", { pageTitle: "Change Password" });
+}
+
+export const postChangePassword = async (req, res) => {
+    const {
+        body: { oldPassword, newPassword, newPassword1 },
+    } = req;
+    try {
+        if(newPassword !== newPassword1){
+            res.status(400); // 매번 구글은 패스워드라고 불리는 필드를 찾아낸다
+            res.redirect(`/users${routes.changePassword}`);
+            return;
+        } 
+        await req.user.changePassword(oldPassword, newPassword);
+        res.redirect(routes.me);
+    } catch(error) {
+        res.status(400);
+        res.redirect(`/users${routes.changePassword}`);
+    }
+}
+

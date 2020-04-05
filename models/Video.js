@@ -21,7 +21,11 @@ const VideoSchema = new mongoose.Schema({ // mongoDB에 우리의 파일의 형�
     comments: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Comment"
-    }]
+    }],
+    creator: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+    }
 });
 
 const model = mongoose.model("Video", VideoSchema); // definition을 통해 실제 document를 만드는것
